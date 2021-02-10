@@ -138,8 +138,8 @@ class MeetingSystem:
         already_booked_meeting = False # suppose not booked a meeting already by this member
         for room_id in self.schedules[time_key]:
           # see if one of the room is having a meeting scheduled by employee_id
-          for meeting in self.meetings:
-            if meeting.start_time == start_time and meeting.end_time == end_time and meeting.employee_id == employee_id:
+          for room_id, meeting in self.meetings.items():
+            if meeting['start_time'] == start_time and meeting['end_time'] == end_time and meeting['employee_id'] == employee_id:
               already_booked_meeting = True # found a meeting booked by this employee_id at same time
               print('Employee has already a meeting scheduled at same time')
 
