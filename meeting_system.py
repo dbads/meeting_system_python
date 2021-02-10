@@ -126,11 +126,15 @@ class MeetingSystem:
 
 
 def CreateMeetingSystem():
-  employees_count = int(input('Please Enter the no of employees '))
-  rooms_count = int(input('Please Enter the no of rooms '))
+  employees_count = int(input('Please Enter the no of employees > '))
+  rooms_count = int(input('Please Enter the no of rooms > '))
   meeting_system = MeetingSystem(rooms_count, employees_count)
-  print('A MeetingSystem with %s Employees and %s meeting rooms has been created.'%(employees_count, rooms_count))
+  print('A MeetingSystem with %s Employees and %s meeting rooms has been created.\n'%(employees_count, rooms_count))
   
+  print('Notes :-\n')
+  print('1. Employee IDs can range from [1-N], N is the employee_count')
+  print('2. Time can be from [1-24]\n')
+
   request_type = 1
   while request_type != 'quit':
     request_type = input('Enter the request_type [book, cancel, quit] > ')
@@ -139,12 +143,12 @@ def CreateMeetingSystem():
     
     # processing book Operations
     if request_type == 'book':
-      [employee_id, start_time, end_time] = input('Enter the booking details employee_id, start_time & end_time in the format as 4 2 3 > ').split(' ')
+      [employee_id, start_time, end_time] = input('Enter the booking details (employee_id start_time end_time) e.g 4 2 3 > ').split(' ')
       meeting_system.book_room(employee_id, start_time, end_time)
     
     # Processing a cancel request
     if request_type == 'cancel':
-      [employee_id, start_time, end_time] = input('Enter the cancelation details employee_id & meeting_id in the format as 4 9 > ').split(' ')
+      [employee_id, start_time, end_time] = input('Enter the cancelation details (employee_id meeting_id ) e.g 4 9 > ').split(' ')
       meeting_system.book_room(employee_id, meeting_id)
     
     print('Currently scheduled meetings - \n', meeting_system.meetings)
