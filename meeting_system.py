@@ -135,27 +135,23 @@ class MeetingSystem:
     if is_valid_details:
       time_key = self.get_time_key(start_time, end_time)
 
-      # check if there is any meetings in this time slot
-      if time_key not in self.schedules:
-        self.confirm_room(employee_id, start_time, end_time)
-      else:
-        # see if the employee has already a meeting at this time
-        already_booked_meeting = False # suppose not booked a meeting already by this member
-        for room_id in self.schedules[time_key]:
-          # see if one of the room is having a meeting scheduled by employee_id
-          for room_id, meeting in self.meetings.items():
-            if not self.is_overlaping_time(meeting['start_time'], meeting['end_time'], start_time, end_time) and meeting['employee_id'] == employee_id:
-              already_booked_meeting = True # found a meeting booked by this employee_id at same time
-              print('Employee has already a meeting scheduled at same time')
+      # see if the employee has already a meeting at this time
+      already_booked_meeting = False # suppose not booked a meeting already by this member
+      # see if one of the room is having a meeting scheduled by employee_id
+      for room_id, meeting in self.meetings.items():
+        if meeting['employee_id'] == employee_id\
+          and self.is_overlaping_time(meeting['start_time'], meeting['end_time'], start_time, end_time):
+          already_booked_meeting = True # found a meeting booked by this employee_id at same time
+          print('Employee has already a meeting scheduled at same time')
 
-        if not already_booked_meeting:
-          # even though this employee has not booked a meeting at this time, there are already other meetings going on at this time
-          # see if there is a free room to schedule this meeting at this time
-          engaged_rooms = self.schedules[time_key]
-          if len(engaged_rooms) + 1 > self.rooms_count: # all rooms are already engaged for this time
-            print('All rooms busy for the given time interval')
-          else:
-            self.confirm_room(employee_id, start_time, end_time)
+      if not already_booked_meeting:
+        # even though this employee has not booked a meeting at this time, there are already other meetings going on at this time
+        # see if there is a free room to schedule this meeting at this time
+        engaged_rooms = self.schedules[time_key] if time_key in self.meetings else []
+        if len(engaged_rooms) + 1 > self.rooms_count: # all rooms are already engaged for this time
+          print('All rooms busy for the given time interval')
+        else:
+          self.confirm_room(employee_id, start_time, end_time)
 
 
   def cancel_room(self, employee_id, meeting_id):
