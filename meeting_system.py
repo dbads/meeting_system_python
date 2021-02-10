@@ -80,10 +80,7 @@ class MeetingSystem:
         print('Invalid meeting_id.')
         is_valid = False
     
-    if not is_valid:
-      print('Invalid meeting details.')
-      return False
-    
+    if not is_valid: return False
     return True
 
 
