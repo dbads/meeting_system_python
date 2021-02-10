@@ -117,53 +117,47 @@ class MeetingSystem:
   def book_room(self, employee_id, start_time, end_time):
     """Schedules a meeting in a room with requested details
     """
-    time_key = get_time_key(start_time, end_time)
+    is_valid_details = self.validate_meeting_details({'employee_id': employee_id, 'start_time': start_time, 'end_time': end_time})
 
-    # check if employee_id is valid
-    if employee_id < 1 or employee_id > self.employees_count: print('No such employee.')
+    if is_valid_details:
+      time_key = get_time_key(start_time, end_time)
 
-    # Can't book a meeting of more than 3 hours
-    if end_time - start_time > 3:
-      print("A meeting can't not exceed 3 hours")
+      # check if there is any meetings in this time slot
+      if time_key not in self.schedules:
+        self.confirm_room(self, employee_id, start_time, end_time)
+      else:
+        # see if the employee has already a meeting at this time
+        already_booked_meeting = False # suppose not booked a meeting already by this member
+        for room_id in self.schedules[time_key]:
+          # see if one of the room is having a meeting scheduled by employee_id
+          for meeting in self.meetings:
+            if meeting.start_time == start_time and meeting.end_time == end_time and meeting.employee_id == employee_id:
+              already_booked_meeting = True # found a meeting booked by this employee_id at same time
+              print('Employee has already a meeting scheduled at same time')
 
-    # check if there is any meetings in this time slot
-    if time_key not in self.schedules:
-      self.confirm_room(self, employee_id, start_time, end_time)
-    else:
-      # see if the employee has already a meeting at this time
-      already_booked_meeting = False # suppose not booked a meeting already by this member
-      for room_id in self.schedules[time_key]:
-        # see if one of the room is having a meeting scheduled by employee_id
-        for meeting in self.meetings:
-          if meeting.start_time == start_time and meeting.end_time == end_time and meeting.employee_id == employee_id:
-            already_booked_meeting = True # found a meeting booked by this employee_id at same time
-            print('Employee has already a meeting scheduled at same time')
-
-      if not already_booked_meeting:
-        # even though this employee has not booked a meeting at this time, there are already other meetings going on at this time
-        # see if there is a free room to schedule this meeting at this time
-        engaged_rooms = self.schedules[time_key]
-        if len(engaged_rooms) + 1 > self.rooms_count: # all rooms are already engaged for this time
-          print('All rooms busy for the given time interval')
-        else:
-          self.confirm_room(self, employee_id, start_time, end_time)
+        if not already_booked_meeting:
+          # even though this employee has not booked a meeting at this time, there are already other meetings going on at this time
+          # see if there is a free room to schedule this meeting at this time
+          engaged_rooms = self.schedules[time_key]
+          if len(engaged_rooms) + 1 > self.rooms_count: # all rooms are already engaged for this time
+            print('All rooms busy for the given time interval')
+          else:
+            self.confirm_room(self, employee_id, start_time, end_time)
 
 
   def cancel_room(self, employee_id, meeting_id):
-    # check if employee_id is valid
-    if employee_id < 1 or employee_id > self.employees_count: print('No such employee.')
+    # validate input
+    is_valid_details = self.validate_meeting_details(self, {'employee_id': employee_id, 'meeting_id': meeting_id})
 
-    # check if meeting_id exists
-    if meeting_id not in self.meetings: print('No such meeting.')
-
-    # cancel the meeting if employee_id has created this meeting
-    if self.meetings[meeting_id].employee_id == employee_id:
-      time_key = get_time_key(start_time, end_time)
-      roome_id = self.meetings[meeting_id].room_id
-      self.schedules[time_key].remove(room_id) # free the room from schedules 
-      del self.meetings[meeting_id] # remove meeting detail from meetings
-      print('Successfuly canceled the meeting')
-    else: print('You are not the organizer of this meeting')
+    if is_valid_details:
+      # cancel the meeting if employee_id has created this meeting
+      if self.meetings[meeting_id].employee_id == employee_id:
+        time_key = get_time_key(start_time, end_time)
+        roome_id = self.meetings[meeting_id].room_id
+        self.schedules[time_key].remove(room_id) # free the room from schedules 
+        del self.meetings[meeting_id] # remove meeting detail from meetings
+        print('Successfuly canceled the meeting')
+      else: print('You are not the organizer of this meeting')
 
 
 def CreateMeetingSystem():
