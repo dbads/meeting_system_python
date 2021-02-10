@@ -1,0 +1,149 @@
+# Notes
+# 1. the meeting system is designed to handle operatinos within a single day 
+# 2. in a day time is measured using 24 hour clock 1,2,3...24
+# 3. time inputs are allowed only as [1,2 .... 23, 24]
+
+
+
+class MeetingSystem:
+  """ A model to create a meeting system with following methods
+  - book: input format = book employee_id, start_time, end_time
+  - cancel: input format = cancel employee_id, meeting_id
+
+  Helper/utitlity methods
+  - get_time_key: returns a string key for given time interval
+  - confirm_room: books a room with gicen details
+  """
+  schedules = {
+  # '12': [5,7], i.e room_id 5 and 7 is busy during time 1 to 2
+  }
+  meetings = {
+    # An sample entry in meetings dictionay
+    # meeting_id: {
+    #   employees_id: demo_employee_id,
+    #   start_time: demo_start_time,
+    #   end_time: demo_end_time,
+    #   room_id: demo_room_id,
+    # }
+  }
+  rooms_count = 0
+  employees_count = 0
+
+  # Initializing meetings system
+  def __init__(self, rooms_count, employees_count):
+    """ Just initiallizes the meeting system with employees_count and rooms_count
+    """
+    self.rooms_count = rooms_count
+    self.employees_count = employees_count
+  
+  # Utitlity methods 
+  def get_time_key(self, start_time, end_time):
+    """ Helper to get string key of time interval
+    - @input start_time and end_time
+    - @returns string key - for this time interval
+    """
+    return str(start_time) + str(end_time)
+
+  def confirm_room(self, employees_id, start_time, end_time):
+    """Book a room
+    - @input employees_id, start_time, end_time
+    - @returns void
+    """
+    time_key = get_time_key(start_time, end_time)
+    free_room_id = len(engaged_rooms) + 1
+
+    # schedule a meeting in free_room_id
+    # making room busy for this time interval
+    if time_key not in schedules:
+      schedules[time_key] = [free_room_id]
+    else:
+      schedules[time_key].append(free_room_id)
+
+    # create a meeting at this time
+    self.meetings[len(self.meetings) + 1] = {
+      room_id: 1,
+      employees_id: employees_id,
+      start_time: start_time,
+      end_time: end_time,
+    }
+    print('Successfuly booked room for meeting')
+
+  def book_room(self, employees_id, start_time, end_time):
+    """Takes request,
+    books a room for the requested interval with following assumptions
+    - the room with least room_id is booked first
+    """
+    time_key = get_time_key(start_time, end_time)
+
+    # Can't book a meeting of more than 3 hours
+    if end_time - start_time > 3:
+      print("A meeting can't not exceed 3 hours")
+
+
+    # check if there is any meetings in this time slot
+    if time_key not in schedules:
+      self.confirm_room(self, employees_id, start_time, end_time)
+    else:
+      # see if the employee has already a meeting at this time
+      already_booked_meeting = False
+      for room_id in schedules[time_key]:
+        # see if one of the room is having a meeting scheduled by employee_id
+        for meeting in meetings:
+          if meeting.start_time == start_time and meeting.end_time == end_time and meeting.employees_id == employees_id:
+            already_booked_meeting = True
+            print('Employee has already a meeting scheduled at same time')
+
+      if not already_booked_meeting:
+        # even though this employee has not booked a meeting at this time, there are already other meetings going on at this time
+        # see if there is a free room to schedule this meeting at this time
+        engaged_rooms = schedules[time_key]
+        if len(engaged_rooms) + 1 > self.rooms_count: # all rooms are already engaged for this time
+          print('All rooms busy for the given time interval')
+        else:
+          self.confirm_room(self, employees_id, start_time, end_time)
+
+
+  def cancel_room(self, employees_id, meeting_id):
+    if meeting_id in meetings:
+      if meetings[meeting_id].employees_id == employees_id:
+        # free the room from schedules 
+        time_key = get_time_key(start_time, end_time)
+        roome_id = meetings[meeting_id].room_id
+        schedules[time_key].remove(room_id)
+        # and remove meeting detail from meetings
+        del meetings[meeting_id]
+        print('Successfuly canceled the meeting')
+      else: print('You are not the organizer of this meeting')
+    else: 
+      print('There is no such meeting :(')
+
+
+def CreateMeetingSystem():
+  employees_count = int(input('Please Enter the no of employees '))
+  rooms_count = int(input('Please Enter the no of rooms '))
+  meeting_system = MeetingSystem(rooms_count, employees_count)
+  print('A MeetingSystem with %s Employees and %s meeting rooms has been created.'%(employees_count, rooms_count))
+  request = 1
+  while request != 'q':
+    print('Operations allowed - ')
+    print('Book a room with input format - book employee_id start_time end_time, e.g. = book 2 9 10')
+    print('Cancel a room with input format - cancel employee_id meeting_id, e.g = cancel 3 8')
+    print('Or simply quit the service by inputing q')
+    request = input('Enter the request ... ')
+    [request_type] = request.split(' ')
+    if request_type not in ['book', 'cancel', 'q']:
+      print('Operations not allowed. Please try again ...')
+    
+    # processing book Operations
+    if request_type == 'book':
+      [request_type, employee_id, start_time, end_time] = request.split(' ')
+      meeting_system.book_room(employee_id, start_time, end_time)
+    
+    # Processing a cancel request
+    if request_type == 'book':
+      [request_type, employee_id, meeting_id] = request.split(' ')
+      meeting_system.book_room(employee_id, meeting_id)
+    
+    print('Currently scheduled meetings - \n', meeting_system.meetings)
+
+CreateMeetingSystem()
