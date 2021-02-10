@@ -101,14 +101,15 @@ class MeetingSystem:
     - @returns void
     """
     time_key = self.get_time_key(start_time, end_time)
-    engaged_rooms = self.schedules[time_key]
-    free_room_id = len(engaged_rooms) + 1
 
     # schedule a meeting in free_room_id
     # making room busy for this time interval
     if time_key not in self.schedules:
-      self.schedules[time_key] = [free_room_id]
+      free_room_id = 1
+      self.schedules[time_key] = [free_room_id] # no room engaged this time, simple take room_id 1 and schedule meeting there
     else:
+      engaged_rooms = self.schedules[time_key]
+      free_room_id = len(engaged_rooms) + 1
       self.schedules[time_key].append(free_room_id)
 
     # create a meeting at this time
