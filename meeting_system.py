@@ -20,7 +20,7 @@ class MeetingSystem:
   meetings = {
     # An sample entry in meetings dictionay
     # meeting_id: {
-    #   employees_id: demo_employee_id,
+    #   employee_id: demo_employee_id,
     #   start_time: demo_start_time,
     #   end_time: demo_end_time,
     #   room_id: demo_room_id,
@@ -47,9 +47,9 @@ class MeetingSystem:
     return str(start_time) + str(end_time)
 
 
-  def confirm_room(self, employees_id, start_time, end_time):
+  def confirm_room(self, employee_id, start_time, end_time):
     """Schedule a meeting in the first room which is free at the requested time slot
-    - @input employees_id, start_time, end_time
+    - @input employee_id, start_time, end_time
     - @returns void
     """
     time_key = get_time_key(start_time, end_time)
@@ -66,14 +66,14 @@ class MeetingSystem:
     # create a meeting at this time
     self.meetings[len(self.meetings) + 1] = {
       room_id: free_room_id,
-      employees_id: employees_id,
+      employee_id: employee_id,
       start_time: start_time,
       end_time: end_time,
     }
     print('Successfuly booked room for meeting')
 
 
-  def book_room(self, employees_id, start_time, end_time):
+  def book_room(self, employee_id, start_time, end_time):
     """Schedules a meeting in a room with requested details
     """
     time_key = get_time_key(start_time, end_time)
@@ -83,31 +83,31 @@ class MeetingSystem:
       print("A meeting can't not exceed 3 hours")
 
     # check if there is any meetings in this time slot
-    if time_key not in schedules:
-      self.confirm_room(self, employees_id, start_time, end_time)
+    if time_key not in self.schedules:
+      self.confirm_room(self, employee_id, start_time, end_time)
     else:
       # see if the employee has already a meeting at this time
-      already_booked_meeting = False
-      for room_id in schedules[time_key]:
+      already_booked_meeting = False # suppose not booked a meeting already by this member
+      for room_id in self.schedules[time_key]:
         # see if one of the room is having a meeting scheduled by employee_id
-        for meeting in meetings:
-          if meeting.start_time == start_time and meeting.end_time == end_time and meeting.employees_id == employees_id:
-            already_booked_meeting = True
+        for meeting in self.meetings:
+          if meeting.start_time == start_time and meeting.end_time == end_time and meeting.employee_id == employee_id:
+            already_booked_meeting = True # found a meeting booked by this employee_id at same time
             print('Employee has already a meeting scheduled at same time')
 
       if not already_booked_meeting:
         # even though this employee has not booked a meeting at this time, there are already other meetings going on at this time
         # see if there is a free room to schedule this meeting at this time
-        engaged_rooms = schedules[time_key]
+        engaged_rooms = self.schedules[time_key]
         if len(engaged_rooms) + 1 > self.rooms_count: # all rooms are already engaged for this time
           print('All rooms busy for the given time interval')
         else:
-          self.confirm_room(self, employees_id, start_time, end_time)
+          self.confirm_room(self, employee_id, start_time, end_time)
 
 
-  def cancel_room(self, employees_id, meeting_id):
+  def cancel_room(self, employee_id, meeting_id):
     if meeting_id in meetings:
-      if meetings[meeting_id].employees_id == employees_id:
+      if meetings[meeting_id].employee_id == employee_id:
         # free the room from schedules 
         time_key = get_time_key(start_time, end_time)
         roome_id = meetings[meeting_id].room_id
