@@ -196,8 +196,10 @@ def CreateMeetingSystem():
         
         # processing book Operations
         if request_type == 'book':
-          [employee_id, start_time, end_time] = input('Enter the booking details (employee_id start_time end_time) e.g 4 2 3 > ').split(' ')
           try:
+            employee_id = input('Employee ID > ').split(' ')[0]
+            start_time = input('Start time > ').split(' ')[0]
+            end_time = input('End time > ').split(' ')[0]
             meeting_system.book_room(int(employee_id), int(start_time), int(end_time))
           except Exception as e:
             print('Error while booking room. try again ...', e)
@@ -209,8 +211,9 @@ def CreateMeetingSystem():
         
         # Processing a cancel request
         if request_type == 'cancel':
-          [employee_id, meeting_id] = input('Enter the cancelation details (employee_id meeting_id ) e.g 4 9 > ').split(' ')
           try:
+            employee_id = input('Employee ID > ').split(' ')[0]
+            meeting_id = input('Meeting ID > ').split(' ')[0]
             meeting_system.cancel_room(int(employee_id), int(meeting_id))
           except Exception as e:
             print('Error while room cancelation. try again ...',e)
