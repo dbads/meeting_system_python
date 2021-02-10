@@ -118,10 +118,12 @@ class MeetingSystem:
     }
     print('Successfuly booked room for meeting')
 
+
   def is_overlaping_time(self, start_time, end_time, new_start_time, new_end_time):
     """Checks whether time intervals overlap or not
     """
     return new_start_time in range(start_time, end_time+1) or new_end_time in range(start_time, end_time+1)
+
 
   # core methods
   def book_room(self, employee_id, start_time, end_time):
