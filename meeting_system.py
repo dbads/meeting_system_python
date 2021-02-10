@@ -40,26 +40,44 @@ class MeetingSystem:
   
   # Utitlity methods 
   def validate_meeting_details(self, details):
+    is_valid = True
 
-    # time should be a discrete value in [1,24]
+    # time should be a discrete value in [1,24], end_time>start_time
     if 'start_time' in details and 'end_time' in details:
       start_time = details['start_time']
       end_time = details['end_time']
       if not type(start_time) == int or not type(end_time) == int or\
-        start_time not in range(1 ,25) or end_time not in range(1, 25): print('Invalid time provided.')
+        start_time not in range(1 ,25) or end_time not in range(1, 25):
+        print('Invalid time provided.')
+        is_valid = False
 
-      # check if start_time < end_time
-      if start_time >= end_time: print('start_time should be strictly less than end_time.')
+      if start_time >= end_time:
+        print('start_time should be strictly less than end_time.')
+        is_valid = False
+      
+      if end_time - start_time > 3:
+        print('Meeting should not exceed 3 hours.')
+        is_valid = False
 
     # check if employee_id is valid
     if 'employee_id' in details:
       employee_id = details['employee_id']
-      if type(employee_id) != int or employee_id not in range(1, len(self.employees_count)+1): print('Invalid Employee ID.')
+      if type(employee_id) != int or employee_id not in range(1, len(self.employees_count)+1):
+        print('Invalid Employee ID.')
+        is_valid = False
     
     # validate meeting_id
     if 'meeting_id' in details:
       meeting_id = details['meeting_id']
-      if meeting_id not in self.meetings: print('Invalid meeting_id.')
+      if meeting_id not in self.meetings:
+        print('Invalid meeting_id.')
+        is_valid = False
+    
+    if not is_valid:
+      print('Invalid meeting details.')
+      return False
+    
+    return True
 
 
   def get_time_key(self, start_time, end_time):
