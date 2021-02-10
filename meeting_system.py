@@ -4,7 +4,6 @@
 # 3. time inputs are allowed only as [1,2 .... 23, 24]
 
 
-
 class MeetingSystem:
   """ A model to create a meeting system with following methods
   - book: input format = book employee_id, start_time, end_time
