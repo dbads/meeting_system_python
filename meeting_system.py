@@ -132,8 +132,8 @@ def CreateMeetingSystem():
   print('A MeetingSystem with %s Employees and %s meeting rooms has been created.\n'%(employees_count, rooms_count))
   
   print('Notes :-\n')
-  print('1. Employee IDs can range from [1-N], N is the employee_count')
-  print('2. Time can be from [1-24]\n')
+  print('1. Employee IDs should be in [1-N], N is the employee_count')
+  print('2. Time should be in [1,24]\n')
 
   request_type = 1
   while request_type != 'quit':
