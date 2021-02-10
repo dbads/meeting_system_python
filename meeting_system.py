@@ -120,8 +120,6 @@ class MeetingSystem:
       time_key = get_time_key(start_time, end_time)
       roome_id = self.meetings[meeting_id].room_id
       self.schedules[time_key].remove(room_id) # free the room from schedules 
-        self.schedules[time_key].remove(room_id) # free the room from schedules 
-      self.schedules[time_key].remove(room_id) # free the room from schedules 
       del self.meetings[meeting_id] # remove meeting detail from meetings
       print('Successfuly canceled the meeting')
     else: print('You are not the organizer of this meeting')
