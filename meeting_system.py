@@ -89,7 +89,7 @@ class MeetingSystem:
     - @input start_time and end_time
     - @returns string key - for this time interval
     """
-    return str(start_time) + str(end_time)
+    return str(start_time) + '-' + str(end_time)
 
 
   def confirm_room(self, employee_id, start_time, end_time):
