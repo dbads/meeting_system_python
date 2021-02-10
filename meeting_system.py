@@ -146,7 +146,7 @@ class MeetingSystem:
       if not already_booked_meeting:
         # even though this employee has not booked a meeting at this time, there are already other meetings going on at this time
         # see if there is a free room to schedule this meeting at this time
-        engaged_rooms = self.schedules[time_key] if time_key in self.meetings else []
+        engaged_rooms = self.schedules[time_key] if time_key in self.schedules else []
         if len(engaged_rooms) + 1 > self.rooms_count: # all rooms are already engaged for this time
           print('All rooms busy for the given time interval')
         else:
