@@ -48,7 +48,7 @@ class MeetingSystem:
 
 
   def confirm_room(self, employees_id, start_time, end_time):
-    """Book a room
+    """Schedule a meeting in the first room which is free at the requested time slot
     - @input employees_id, start_time, end_time
     - @returns void
     """
