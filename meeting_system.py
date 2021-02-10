@@ -111,17 +111,20 @@ class MeetingSystem:
   def cancel_room(self, employee_id, meeting_id):
     # check if employee_id is valid
     if employee_id < 1 or employee_id > self.employees_count: print('No such employee.')
-    
-    if meeting_id in self.meetings: # check if meeting_id exists
-      if meetings[meeting_id].employee_id == employee_id: # check if meeting_id is scheduled by employee_id
-        time_key = get_time_key(start_time, end_time)
-        roome_id = self.meetings[meeting_id].room_id
+
+    # check if meeting_id exists
+    if meeting_id not in self.meetings: print('No such meeting.')
+
+    # cancel the meeting if employee_id has created this meeting
+    if self.meetings[meeting_id].employee_id == employee_id:
+      time_key = get_time_key(start_time, end_time)
+      roome_id = self.meetings[meeting_id].room_id
+      self.schedules[time_key].remove(room_id) # free the room from schedules 
         self.schedules[time_key].remove(room_id) # free the room from schedules 
-        del self.meetings[meeting_id] # remove meeting detail from meetings
-        print('Successfuly canceled the meeting')
-      else: print('You are not the organizer of this meeting')
-    else: 
-      print('There is no such meeting :(')
+      self.schedules[time_key].remove(room_id) # free the room from schedules 
+      del self.meetings[meeting_id] # remove meeting detail from meetings
+      print('Successfuly canceled the meeting')
+    else: print('You are not the organizer of this meeting')
 
 
 def CreateMeetingSystem():
