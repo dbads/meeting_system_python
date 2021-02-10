@@ -100,7 +100,7 @@ class MeetingSystem:
     - @input employee_id, start_time, end_time
     - @returns void
     """
-    time_key = get_time_key(start_time, end_time)
+    time_key = self.get_time_key(start_time, end_time)
     engaged_rooms = schedules[time_key]
     free_room_id = len(engaged_rooms) + 1
 
@@ -127,7 +127,7 @@ class MeetingSystem:
     is_valid_details = self.validate_meeting_details({'employee_id': employee_id, 'start_time': start_time, 'end_time': end_time})
 
     if is_valid_details:
-      time_key = get_time_key(start_time, end_time)
+      time_key = self.get_time_key(start_time, end_time)
 
       # check if there is any meetings in this time slot
       if time_key not in self.schedules:
@@ -159,7 +159,7 @@ class MeetingSystem:
     if is_valid_details:
       # cancel the meeting if employee_id has created this meeting
       if self.meetings[meeting_id].employee_id == employee_id:
-        time_key = get_time_key(start_time, end_time)
+        time_key = self.get_time_key(start_time, end_time)
         roome_id = self.meetings[meeting_id].room_id
         self.schedules[time_key].remove(room_id) # free the room from schedules 
         del self.meetings[meeting_id] # remove meeting detail from meetings
