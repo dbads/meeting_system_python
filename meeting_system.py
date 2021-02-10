@@ -41,6 +41,12 @@ class MeetingSystem:
   
   # Utitlity methods 
   def validate_meeting_details(self, details):
+    """Checks if meeting details are valid
+    - time should be in [1,24]
+    - employee_id should be in [1,N], N is employees_count
+    - meeting_id should exist in meetings
+    - @return Boolean(True/False)
+    """
     is_valid = True
 
     # time should be a discrete value in [1,24], end_time>start_time
