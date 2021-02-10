@@ -106,14 +106,12 @@ class MeetingSystem:
 
 
   def cancel_room(self, employee_id, meeting_id):
-    if meeting_id in meetings:
-      if meetings[meeting_id].employee_id == employee_id:
-        # free the room from schedules 
+    if meeting_id in self.meetings: # check if meeting_id exists
+      if meetings[meeting_id].employee_id == employee_id: # check if meeting_id is scheduled by employee_id
         time_key = get_time_key(start_time, end_time)
-        roome_id = meetings[meeting_id].room_id
-        schedules[time_key].remove(room_id)
-        # and remove meeting detail from meetings
-        del meetings[meeting_id]
+        roome_id = self.meetings[meeting_id].room_id
+        self.schedules[time_key].remove(room_id) # free the room from schedules 
+        del self.meetings[meeting_id] # remove meeting detail from meetings
         print('Successfuly canceled the meeting')
       else: print('You are not the organizer of this meeting')
     else: 
