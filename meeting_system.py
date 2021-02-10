@@ -131,7 +131,7 @@ class MeetingSystem:
 
       # check if there is any meetings in this time slot
       if time_key not in self.schedules:
-        self.confirm_room(self, employee_id, start_time, end_time)
+        self.confirm_room(employee_id, start_time, end_time)
       else:
         # see if the employee has already a meeting at this time
         already_booked_meeting = False # suppose not booked a meeting already by this member
@@ -149,12 +149,12 @@ class MeetingSystem:
           if len(engaged_rooms) + 1 > self.rooms_count: # all rooms are already engaged for this time
             print('All rooms busy for the given time interval')
           else:
-            self.confirm_room(self, employee_id, start_time, end_time)
+            self.confirm_room(employee_id, start_time, end_time)
 
 
   def cancel_room(self, employee_id, meeting_id):
     # validate input
-    is_valid_details = self.validate_meeting_details(self, {'employee_id': employee_id, 'meeting_id': meeting_id})
+    is_valid_details = self.validate_meeting_details({'employee_id': employee_id, 'meeting_id': meeting_id})
 
     if is_valid_details:
       # cancel the meeting if employee_id has created this meeting
