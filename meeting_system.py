@@ -69,7 +69,7 @@ class MeetingSystem:
     # check if employee_id is valid
     if 'employee_id' in details:
       employee_id = details['employee_id']
-      if type(employee_id) != int or employee_id not in range(1, len(self.employees_count)+1):
+      if type(employee_id) != int or employee_id not in range(1, self.employees_count + 1):
         print('Invalid Employee ID.')
         is_valid = False
     
