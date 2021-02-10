@@ -168,44 +168,46 @@ class MeetingSystem:
 
 
 def CreateMeetingSystem():
-  employees_count = input('Please Enter the no of employees > ')
-  rooms_count = input('Please Enter the no of rooms > ')
+  valid_meeting_initializer = False
+  while not valid_meeting_initializer:
+    employees_count = input('Please Enter the no of employees > ')
+    rooms_count = input('Please Enter the no of rooms > ')
 
-  if type(employees_count) == str or type(rooms_count) == str:
-    print('Invalid employees_count or rooms count')
-  else:
-    employees_count = int(employees_count)
-    rooms_count = int(rooms_count)
+    try:
+      employees_count = int(employees_count)
+      rooms_count = int(rooms_count)
+      valid_meeting_initializer = True # valid a meeting initiallizers rooms_count and employees_count, stop calling initializer again now
 
-  meeting_system = MeetingSystem(rooms_count, employees_count)
-  print('A MeetingSystem with %s Employees and %s meeting rooms has been created.\n'%(employees_count, rooms_count))
-  
-  print('Notes :-\n')
-  print('1. Employee IDs should be in [1-N], N is the employee_count')
-  print('2. Time should be in [1,24]\n')
+      meeting_system = MeetingSystem(rooms_count, employees_count)
+      print('A MeetingSystem with %s Employees and %s meeting rooms has been created.\n'%(employees_count, rooms_count))
+      
+      print('Notes :-\n')
+      print('1. Employee IDs should be in [1-N], N is the employee_count')
+      print('2. Time should be in [1,24]\n')
 
-  request_type = 1
-  while request_type != 'quit':
-    request_type = input('Enter the request_type [book, cancel, quit] > ')
-    if request_type not in ['book', 'cancel', 'quit']:
-      print('Operations not allowed. Please try again ...')
-    
-    # processing book Operations
-    if request_type == 'book':
-      [employee_id, start_time, end_time] = input('Enter the booking details (employee_id start_time end_time) e.g 4 2 3 > ').split(' ')
-      if type(employee_id) == str or type(start_time) == str or type(end_time) == str:
-        print('invalid input try again ...')
-      else:  
-        meeting_system.book_room(int(employee_id), int(start_time), int(end_time))
-    
-    # Processing a cancel request
-    if request_type == 'cancel':
-      [employee_id, meeting_id] = input('Enter the cancelation details (employee_id meeting_id ) e.g 4 9 > ').split(' ')
-      if type(employee_id) == str or type(meeting_id) == str:
-        print('invalid input try again ...')
-      meeting_system.book_room(int(employee_id), int(meeting_id))
-    
-    print('Currently scheduled meetings - \n', meeting_system.meetings)
+      request_type = 1
+      while request_type != 'quit':
+        request_type = input('Enter the request_type [book, cancel, quit] > ')
+        if request_type not in ['book', 'cancel', 'quit']:
+          print('Operations not allowed. Please try again ...')
+        
+        # processing book Operations
+        if request_type == 'book':
+          [employee_id, start_time, end_time] = input('Enter the booking details (employee_id start_time end_time) e.g 4 2 3 > ').split(' ')
+          if type(employee_id) == str or type(start_time) == str or type(end_time) == str:
+            print('invalid input try again ...')
+          else:  
+            meeting_system.book_room(int(employee_id), int(start_time), int(end_time))
+        
+        # Processing a cancel request
+        if request_type == 'cancel':
+          [employee_id, meeting_id] = input('Enter the cancelation details (employee_id meeting_id ) e.g 4 9 > ').split(' ')
+          if type(employee_id) == str or type(meeting_id) == str:
+            print('invalid input try again ...')
+          meeting_system.book_room(int(employee_id), int(meeting_id))
+        print('Currently scheduled meetings - \n', meeting_system.meetings)
+    except:
+        print('Invalid employees_count or rooms_count. Try again ...')
 
 
 CreateMeetingSystem()
