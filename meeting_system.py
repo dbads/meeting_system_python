@@ -53,6 +53,7 @@ class MeetingSystem:
     - @returns void
     """
     time_key = get_time_key(start_time, end_time)
+    engaged_rooms = schedules[time_key]
     free_room_id = len(engaged_rooms) + 1
 
     # schedule a meeting in free_room_id
@@ -64,7 +65,7 @@ class MeetingSystem:
 
     # create a meeting at this time
     self.meetings[len(self.meetings) + 1] = {
-      room_id: 1,
+      room_id: free_room_id,
       employees_id: employees_id,
       start_time: start_time,
       end_time: end_time,
