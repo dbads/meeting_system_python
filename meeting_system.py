@@ -21,10 +21,10 @@ class MeetingSystem:
   meetings = {
     # An sample entry
     # meeting_id: {
-    #   employee_id: demo_employee_id,
-    #   start_time: demo_start_time,
-    #   end_time: demo_end_time,
-    #   room_id: demo_room_id,
+    #   'employee_id': demo_employee_id,
+    #   'start_time': demo_start_time,
+    #   'end_time': demo_end_time,
+    #   'room_id': demo_room_id,
     # }
   }
 
@@ -113,10 +113,10 @@ class MeetingSystem:
 
     # create a meeting at this time
     self.meetings[len(self.meetings) + 1] = {
-      room_id: free_room_id,
-      employee_id: employee_id,
-      start_time: start_time,
-      end_time: end_time,
+      'room_id': free_room_id,
+      'employee_id': employee_id,
+      'start_time': start_time,
+      'end_time': end_time,
     }
     print('Successfuly booked room for meeting')
 
