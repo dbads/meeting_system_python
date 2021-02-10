@@ -218,6 +218,7 @@ def CreateMeetingSystem():
                   e.__traceback__.tb_lineno  # 2
               )
 
+        print('Current schedules - \n', meeting_system.schedules)
         print('Currently scheduled meetings - \n', meeting_system.meetings)
     except Exception as e:
         valid_meeting_initializer = False
