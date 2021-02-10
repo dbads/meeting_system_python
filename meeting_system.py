@@ -124,8 +124,8 @@ def CreateMeetingSystem():
   meeting_system = MeetingSystem(rooms_count, employees_count)
   print('A MeetingSystem with %s Employees and %s meeting rooms has been created.'%(employees_count, rooms_count))
   
-  request = 1
-  while request != 'q':
+  request_type = 1
+  while request_type != 'q':
     print('Operations allowed - ')
     print('Book a room with input format - book employee_id start_time end_time, e.g. = book 2 9 10')
     print('Cancel a room with input format - cancel employee_id meeting_id, e.g = cancel 3 8')
