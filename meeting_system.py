@@ -186,12 +186,17 @@ def CreateMeetingSystem():
     # processing book Operations
     if request_type == 'book':
       [employee_id, start_time, end_time] = input('Enter the booking details (employee_id start_time end_time) e.g 4 2 3 > ').split(' ')
-      meeting_system.book_room(employee_id, start_time, end_time)
+      if type(employee_id) == str or type(start_time) == str or type(end_time) == str:
+        print('invalid input try again ...')
+      else:  
+        meeting_system.book_room(int(employee_id), int(start_time), int(end_time))
     
     # Processing a cancel request
     if request_type == 'cancel':
-      [employee_id, start_time, end_time] = input('Enter the cancelation details (employee_id meeting_id ) e.g 4 9 > ').split(' ')
-      meeting_system.book_room(employee_id, meeting_id)
+      [employee_id, meeting_id] = input('Enter the cancelation details (employee_id meeting_id ) e.g 4 9 > ').split(' ')
+      if type(employee_id) == str or type(meeting_id) == str:
+        print('invalid input try again ...')
+      meeting_system.book_room(int(employee_id), int(meeting_id))
     
     print('Currently scheduled meetings - \n', meeting_system.meetings)
 
