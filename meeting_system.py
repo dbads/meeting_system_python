@@ -14,11 +14,12 @@ class MeetingSystem:
   - confirm_room: books a room with gicen details
   """
   schedules = {
+  # sample entry
   # '12': [5,7], i.e room_id 5 and 7 is busy during time 1 to 2
   }
 
   meetings = {
-    # An sample entry in meetings dictionay
+    # An sample entry
     # meeting_id: {
     #   employee_id: demo_employee_id,
     #   start_time: demo_start_time,
