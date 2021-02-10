@@ -17,6 +17,7 @@ class MeetingSystem:
   schedules = {
   # '12': [5,7], i.e room_id 5 and 7 is busy during time 1 to 2
   }
+
   meetings = {
     # An sample entry in meetings dictionay
     # meeting_id: {
@@ -26,6 +27,7 @@ class MeetingSystem:
     #   room_id: demo_room_id,
     # }
   }
+
   rooms_count = 0
   employees_count = 0
 
@@ -35,6 +37,7 @@ class MeetingSystem:
     """
     self.rooms_count = rooms_count
     self.employees_count = employees_count
+
   
   # Utitlity methods 
   def get_time_key(self, start_time, end_time):
@@ -43,6 +46,7 @@ class MeetingSystem:
     - @returns string key - for this time interval
     """
     return str(start_time) + str(end_time)
+
 
   def confirm_room(self, employees_id, start_time, end_time):
     """Book a room
@@ -68,6 +72,7 @@ class MeetingSystem:
     }
     print('Successfuly booked room for meeting')
 
+
   def book_room(self, employees_id, start_time, end_time):
     """Takes request,
     books a room for the requested interval with following assumptions
@@ -78,7 +83,6 @@ class MeetingSystem:
     # Can't book a meeting of more than 3 hours
     if end_time - start_time > 3:
       print("A meeting can't not exceed 3 hours")
-
 
     # check if there is any meetings in this time slot
     if time_key not in schedules:
@@ -123,6 +127,7 @@ def CreateMeetingSystem():
   rooms_count = int(input('Please Enter the no of rooms '))
   meeting_system = MeetingSystem(rooms_count, employees_count)
   print('A MeetingSystem with %s Employees and %s meeting rooms has been created.'%(employees_count, rooms_count))
+  
   request = 1
   while request != 'q':
     print('Operations allowed - ')
@@ -145,5 +150,6 @@ def CreateMeetingSystem():
       meeting_system.book_room(employee_id, meeting_id)
     
     print('Currently scheduled meetings - \n', meeting_system.meetings)
+
 
 CreateMeetingSystem()
