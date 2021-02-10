@@ -1,7 +1,7 @@
 # Notes
 # 1. the meeting system is designed to handle operatinos within a single day 
 # 2. in a day time is measured using 24 hour clock 1,2,3...24
-# 3. time inputs are allowed only as [1,2 .... 23, 24]
+# 3. time inputs are allowed only as [1,2 .... 23, 24] discrete values
 
 
 class MeetingSystem:
