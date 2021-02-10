@@ -168,8 +168,15 @@ class MeetingSystem:
 
 
 def CreateMeetingSystem():
-  employees_count = int(input('Please Enter the no of employees > '))
-  rooms_count = int(input('Please Enter the no of rooms > '))
+  employees_count = input('Please Enter the no of employees > ')
+  rooms_count = input('Please Enter the no of rooms > ')
+
+  if type(employees_count) == str or type(rooms_count) == str:
+    print('Invalid employees_count or rooms count')
+  else:
+    employees_count = int(employees_count)
+    rooms_count = int(rooms_count)
+
   meeting_system = MeetingSystem(rooms_count, employees_count)
   print('A MeetingSystem with %s Employees and %s meeting rooms has been created.\n'%(employees_count, rooms_count))
   
