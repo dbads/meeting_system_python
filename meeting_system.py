@@ -133,8 +133,7 @@ def CreateMeetingSystem():
   
   request_type = 1
   while request_type != 'quit':
-    print('Operations allowed - book, cancel, quit')
-    request_type = input('Enter the request ... ')
+    request_type = input('Enter the request_type [book, cancel, quit] > ')
     if request_type not in ['book', 'cancel', 'quit']:
       print('Operations not allowed. Please try again ...')
     
