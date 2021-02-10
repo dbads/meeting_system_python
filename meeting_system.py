@@ -73,9 +73,7 @@ class MeetingSystem:
 
 
   def book_room(self, employees_id, start_time, end_time):
-    """Takes request,
-    books a room for the requested interval with following assumptions
-    - the room with least room_id is booked first
+    """Schedules a meeting in a room with requested details
     """
     time_key = get_time_key(start_time, end_time)
 
