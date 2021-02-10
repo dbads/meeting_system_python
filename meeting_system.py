@@ -144,7 +144,7 @@ class MeetingSystem:
         for room_id in self.schedules[time_key]:
           # see if one of the room is having a meeting scheduled by employee_id
           for room_id, meeting in self.meetings.items():
-            if meeting['start_time'] == start_time and meeting['end_time'] == end_time and meeting['employee_id'] == employee_id:
+            if not self.is_overlaping_time(meeting['start_time'], meeting['end_time'], start_time, end_time) and meeting['employee_id'] == employee_id:
               already_booked_meeting = True # found a meeting booked by this employee_id at same time
               print('Employee has already a meeting scheduled at same time')
 
