@@ -159,9 +159,11 @@ class MeetingSystem:
 
     if is_valid_details:
       # cancel the meeting if employee_id has created this meeting
-      if self.meetings[meeting_id].employee_id == employee_id:
+      if self.meetings[meeting_id]['employee_id'] == employee_id:
+        start_time = self.meetings[meeting_id]['start_time']
+        end_time = self.meetings[meeting_id]['end_time']
         time_key = self.get_time_key(start_time, end_time)
-        roome_id = self.meetings[meeting_id].room_id
+        room_id = self.meetings[meeting_id]['room_id']
         self.schedules[time_key].remove(room_id) # free the room from schedules 
         del self.meetings[meeting_id] # remove meeting detail from meetings
         print('Successfuly canceled the meeting')
