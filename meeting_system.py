@@ -132,24 +132,20 @@ def CreateMeetingSystem():
   print('A MeetingSystem with %s Employees and %s meeting rooms has been created.'%(employees_count, rooms_count))
   
   request_type = 1
-  while request_type != 'q':
-    print('Operations allowed - ')
-    print('Book a room with input format - book employee_id start_time end_time, e.g. = book 2 9 10')
-    print('Cancel a room with input format - cancel employee_id meeting_id, e.g = cancel 3 8')
-    print('Or simply quit the service by inputing q')
-    request = input('Enter the request ... ')
-    [request_type] = request.split(' ')
-    if request_type not in ['book', 'cancel', 'q']:
+  while request_type != 'quit':
+    print('Operations allowed - book, cancel, quit')
+    request_type = input('Enter the request ... ')
+    if request_type not in ['book', 'cancel', 'quit']:
       print('Operations not allowed. Please try again ...')
     
     # processing book Operations
     if request_type == 'book':
-      [request_type, employee_id, start_time, end_time] = request.split(' ')
+      [employee_id, start_time, end_time] = input('Enter the booking details employee_id, start_time & end_time, 4 2 3').split(' ')
       meeting_system.book_room(employee_id, start_time, end_time)
     
     # Processing a cancel request
-    if request_type == 'book':
-      [request_type, employee_id, meeting_id] = request.split(' ')
+    if request_type == 'cancel':
+      [employee_id, start_time, end_time] = input('Enter the cancelation details employee_id & meeting_id, 4 9').split(' ')
       meeting_system.book_room(employee_id, meeting_id)
     
     print('Currently scheduled meetings - \n', meeting_system.meetings)
