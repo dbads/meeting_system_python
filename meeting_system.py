@@ -198,6 +198,11 @@ def CreateMeetingSystem():
             meeting_system.book_room(int(employee_id), int(start_time), int(end_time))
           except Exception as e:
             print('Error while booking room. try again ...', e)
+            print(
+                  type(e).__name__,          # TypeError
+                  __file__,                  # /tmp/example.py
+                  e.__traceback__.tb_lineno  # 2
+              )
         
         # Processing a cancel request
         if request_type == 'cancel':
@@ -206,6 +211,11 @@ def CreateMeetingSystem():
             meeting_system.cancel_room(int(employee_id), int(meeting_id))
           except Exception as e:
             print('Error while room cancelation. try again ...',e)
+            print(
+                  type(e).__name__,          # TypeError
+                  __file__,                  # /tmp/example.py
+                  e.__traceback__.tb_lineno  # 2
+              )
 
         print('Currently scheduled meetings - \n', meeting_system.meetings)
     except Exception as e:
