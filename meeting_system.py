@@ -208,8 +208,9 @@ def CreateMeetingSystem():
             print('Error while room cancelation. try again ...',e)
 
         print('Currently scheduled meetings - \n', meeting_system.meetings)
-    except:
-        print('Invalid employees_count or rooms_count. Try again ...')
+    except error as e:
+        valid_meeting_initializer = False
+        print('Error occurred. Try again ...', e)
 
 
 CreateMeetingSystem()
