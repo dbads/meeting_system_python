@@ -140,12 +140,12 @@ def CreateMeetingSystem():
     
     # processing book Operations
     if request_type == 'book':
-      [employee_id, start_time, end_time] = input('Enter the booking details employee_id, start_time & end_time, 4 2 3').split(' ')
+      [employee_id, start_time, end_time] = input('Enter the booking details employee_id, start_time & end_time in the format as 4 2 3 > ').split(' ')
       meeting_system.book_room(employee_id, start_time, end_time)
     
     # Processing a cancel request
     if request_type == 'cancel':
-      [employee_id, start_time, end_time] = input('Enter the cancelation details employee_id & meeting_id, 4 9').split(' ')
+      [employee_id, start_time, end_time] = input('Enter the cancelation details employee_id & meeting_id in the format as 4 9 > ').split(' ')
       meeting_system.book_room(employee_id, meeting_id)
     
     print('Currently scheduled meetings - \n', meeting_system.meetings)
